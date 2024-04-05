@@ -1,9 +1,7 @@
-Hello, I am Tikhala Isaac Katemecha, my friends call me Tikha.
+Hello, I am Tikhala Isaac Katemecha, my friends just call me Tikha (tee-K-ha).
 
-I am a wannabe data scientist! ...so i built this portfolio to showcase my projects in my filed if interest :-)
+Welcome to my personal portfolio! 🌟
 
-I am a motivated, teamwork oriented and responsible data analyst with significant experience in comprehension of reports, visualisations and presentations by the average professional. Highly educated, possessing an honours degree in Computer Engineering, and professional certification in Data Analytics. 
-
-My interests are: Renewable Energy, Green Innovation, Big Data,  Still Graphics, Music.
+I’m passionate about Data Analysis and love creating beautiful, functional infographics. Explore my skills, check out my projects, and get inspired! Feel free to connect with me— I’m always excited to collaborate and learn from fellow developers. Let’s build something amazing together! 😊
 
 Credits: https://html5up.net/
