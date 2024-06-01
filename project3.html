@@ -1,0 +1,247 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Tikhala Portfolio</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+</head>
+
+<body class="is-preload">
+
+    <!-- Header -->
+    <header id="header">
+        <div class="inner">
+            <a href="#" class="image avatar"><img src="images\Tikhala.jpg" alt="Display Profile Picture" /></a>
+            <h2><strong>Tikhala Isaac Katemecha</strong> </h2><br><h1>Data Analyst, Electronics and Computer Engineer</h1>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <div id="main">
+
+        <!-- One -->
+        <section id="one">
+            <header class="major">
+                <h2>What App Should I Develop?</h2>
+            </header>
+            <p>An insight into what app to develop using app data from the apple store. For a young app developer looking to break into a profitable app category.<br><br>
+
+            <b>The Stakeholder</b> <br><br>In this case, our stakeholder is an aspiring app developer who needs data driven insight to decide what app to develop. Seeking answers to questions like: What app categories are most popular? What price should I set for my app? How can i maximize my user ratings?
+                <br><br><strong>Data Context</strong><br><br>
+            The dataset included information covering the apps available on the appstore, dataset from Kaggle.com. One dataset called applestore which included app details of pps available on the appstore: Appnames, Sizing Bytes, Ratings, Supporting Device, Number of supported Languages and more. <br><br>One other dataset for the apps description, which explains how the app interfaces with its userbase and what solution it provides, and a glimpse of how it might be perceived on the market. The columns included app unique identity, size in bytes, description and more.<br><br>
+
+            <img src="project3images/project3.1.webp"
+                class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
+                width="90%" alt="AppDataImage1">
+            <br><br><strong>Connecting to the Dataset</strong><br><br>
+            Using SQL-Lite online allows for a seamless online connection to a dataset without the need to install dependencies, and setting up database on a local machine.
+
+            <br><br><strong>Exploratory Data Analysis (EDA)</strong><br><br>
+            The dataset was combined from four separate tables, because SQL-LIte online does not take in large datasets. The four were combined into one dataset using *Union All* an SQL function that one unified data table from multiple tables.<br><br>Exploring the data to reveal issues in data inconsistencies, data errors and outliers before perfoming the actual data analysis.
+            </p>
+            <pre>
+                <code class= "language-sql"> 
+    ---combining the multiple tables into one
+    create table appleStore_description_combined AS
+    select * from appleStore_description1
+        union ALL
+    select * from appleStore_description2
+        union ALL
+    select * from appleStore_description3
+        union ALL
+    select * from appleStore_description4
+
+    ---now on to the "EDA" Exploratory Data Analysis
+    select COUNT(DISTINCT id) as UniqueAppIDs
+        from AppleStore
+
+    ---checking the number of unique apps in both tablesAppleStore                    
+    select count(DISTINCT id) as UniqueAppIDs
+        from appleStore_description_combined
+                        
+    --checking for any missing valuesAppleStore in any key fields of the tables
+    select * from AppleStore
+        limit 10
+     
+    ---checking for missing values in some key columns
+    select count(*) as MissingValues
+        from AppleStore
+        where track_name is null 
+        or prime_genre is null
+        or user_rating is null
+
+    ---cheking for missing values in the app description dataset                    
+    select count(*) as MissingValues
+        from appleStore_description_combined
+        where app_desc is null
+                        
+    --find out the number of apps per genreAppleStore
+    --this gives an idea of the distritubion of the app dev genreAppleStore
+    --- to identify some dominant app genres
+                        
+    select prime_genre, count(*) as NumApp
+        from AppleStore
+        group by prime_genre
+        order by NumApp desc
+                        
+    --getting an overview of the apps ratings 
+    select max(user_rating) as MaxRating,
+        min(user_rating) as MinRating,
+        Avg(user_rating) as AvgRating
+        from AppleStore
+            </code></pre>
+            <img src="project3images/project3.2.webp"
+            class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
+            width="90%" alt="AppDataImage1"> <br>
+            <strong>Drawing Insights from the Data</strong>
+            <br>Questions to be answered in the analysis: what insights we need to draw from the data<br>
+                <ol>
+                    <li>Explore if paid apps have higher ratings than free apps.</li>
+                    <li>Find out if apps that support a higher number of languages have higher ratings.</li>
+                    <li>Explore the genres with low ratings.</li>
+                    <li>Explore the correlation between the app description length and app user ratings.</li>
+                    <li>Find the top rated apps in each app category/genre.</li>
+                </ol>
+            <pre>
+                <code class="language-sql">
+    --insights or takeaway points for our stakeholderAppleStore
+    select CASE
+        when price > 0 then 'Paid'
+        else 'Free'
+            end as App_Type, avg(user_rating) as 'AvgRating'
+        from AppleStore
+        GROUP by App_Type
+    
+    --explore if apps that support more languages have higher ratingsAppleStore
+    select CASE
+        when lang_num < 10 then  '< 10 Languages'
+        when lang_num BETWEEN 10 and 30 then '10-30 Languages'
+            else '> 30 Languages'
+            end as Languages_Bucket, avg(user_rating) as Avg_Rating
+        from AppleStore
+        group by Languages_Bucket
+        order by Avg_rating desc
+
+    --Check the genres with low ratingsAppleStore
+    --The ones that might have a better opportunity to create an app in
+    select prime_genre, avg(user_rating) as Avg_Rating
+        from AppleStore
+        group by prime_genre
+        ORDER by Avg_Rating ASC
+        limit 10
+
+
+    --check the correlation btwn app user rating and description lengthAppleStore
+    Select case
+        when length(appdesc.app_desc) < 500 
+                then 'Short'
+        when length(appdesc.app_desc) between 500 and 1000 
+                then 'Medium'
+                else 'Long'
+            end as Desc_Length, avg(user_rating) as UserRating
+        from AppleStore as appst
+        join appleStore_description_combined as appdesc
+        on appst.id = appdesc.id
+        group by Desc_Length
+        order by UserRating desc
+
+    --top rated apps for each genre (what to emmulate when developing the app, top rated app in each genre)
+    select prime_genre, track_name, user_rating
+    from (  select prime_genre, 
+            track_name, 
+            user_rating,
+            rank() over (partition by prime_genre ORDER by user_rating desc,
+                        rating_count_tot desc) as Rank
+    from AppleStore) as a 
+        where a.Rank = 1</code>
+            </pre>
+
+            <p><strong>Recomendations from the Analysis</strong><br>
+                 <ol>
+                    <li><b>Paid versus free apps:</b> Paid apps generally achieve slightly higher ratings than free apps, users who pay for an app may perceive the app more valuable and so are much more likely to engange in rating.</li>
+                    <li><b>Language support:</b>Apps that support more than 10 languages but less than 30 languages have better ratings compared to those that support more that 30 languages and those that support less than 10 languages.</li>
+                    <li><b>High perfoming genres:</b>Categories like Finace and Books have existing apps that have a very low user ratings indicating an opportunity gap for app development as a result of user needs not being fully met.</li>
+                    <li><b>App description length:</b>A detailed, well crafted app description is essential for the success of an app as the length of the app's descritpion sets clear expectation from the user. From the data exploration, the length of the description is directly correlated with higher user app ratings.</li>
+                    <li>The average rating of apps on the appstore is 3.5, and the highest rating is 5. To stand out from the crowd, developer needs to aim for a rating higher than the average user rating.</li>
+                    <li>Games, with 3862 apps, Seconded by Entertainment with 535 apps, and Education with 453 apps suggest that these three top genres are saturated and therefore showing high competition on the development side of things. This however also indicate a high user demand in these genres.</li>   
+                </ol>
+                <strong>Credits:</strong>@loresowhat <br><br>
+            <ul class="actions">
+                <li><a href="index.html" class="button">Back to Projects</a></li>
+            </ul> <hr>
+            <h2>Let's Connect!</h2>
+						<p>Thank you for checking out my portfolio! I hope you enjoyed exploring my projects. You can also explore more of my data visualizations on Tableau Public. Feel free to view some of my brand identity development projects on Behance. <br><br><strong>Tikhala :-)</strong> </p>
+						<ul class="actions">
+							<li><a href="https://github.com/tikhala" class="button">My Github</a></li>
+							<li><a href="https://public.tableau.com/app/profile/tikhalakatemecha
+								" class="button">My Tableau Public</a></li>
+							<li><a href="https://www.behance.net/tikhala" class="button">My Behance</a></li>
+							<li><a href="www.linkedin.com/in/tikhalakatemecha" class="button">My LinkedIn</a></li>
+						
+						</ul>
+        </section>
+        <!-- Three -->
+        <section id="three">
+            <div class="row">
+                <div class="col-8 col-12-small">
+                    <form method="post" action="mailto:tikhalakatemecha@gmail.com" enctype="multipart/form-data">
+                        <div class="row gtr-uniform gtr-50">
+                            <div class="col-6 col-12-xsmall"><input type="text" name="name" id="name" placeholder="Name" /></div>
+                            <div class="col-6 col-12-xsmall"><input type="email" name="email" id="email" placeholder="Email" /></div>
+                            <div class="col-12"><textarea name="message" id="message" placeholder="Type Your Message Here" rows="4"></textarea></div>
+                        </div>
+                    </form>
+                    <ul class="actions">
+                        <li><input type="submit" value="Send Message" /></li>
+                    </ul>
+                </div>
+                <div class="col-4 col-12-small">
+                    <ul class="labeled-icons">
+                        <li>
+                            <h3 class="icon solid fa-home"><span class="label">Address</span></h3>
+                            Lilongwe, Malawi.
+                        </li>
+                        <li>
+                            <h3 class="icon solid fa-mobile-alt"><span class="label">Phone</span></h3>
+                            +265(0) 996-127-620
+                        </li>
+                        <li>
+                            <h3 class="icon solid fa-envelope"><span class="label">Email</span></h3>
+                            <a href="#">tikhalakatemecha@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+						
+                <li><a href="https://github.com/tikhala" class="icon brands fa-github"><span class="label">Github</span></a></li>
+                <li><a href="www.linkedin.com/in/tikhalakatemecha" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+                <li><a href="https://www.behance.net/tikhala" class="icon brands fa-behance"><span class="label"></span></a></li>
+                <li><a href="tikhalakatemecha@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Tikhala 2024</li>
+            </ul>
+        </div>
+    </footer>
+
+<!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.poptrox.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    
+</div>
+</body>
+</html>
