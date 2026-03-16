@@ -1,0 +1,164 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Tikhala Portfolio</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+
+<body class="is-preload">
+
+    <!-- Header -->
+    <header id="header">
+        <div class="inner">
+            <a href="#" class="image avatar"><img src="images\Tikhala.jpg" alt="Display Profile Picture" /></a>
+            <h2><strong>Tikhala Isaac Katemecha</strong> </h2><br><h1>Data Analyst, Electronics and Computer Engineer</h1>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <div id="main">
+
+        <!-- One -->
+        <section id="one">
+            <header class="major">
+                <h2>A Machine Learning Approach to Energy Forecasting, Electricity Demand: Delhi, India
+</h2>
+            </header>
+            <p>Can we accurately predict electricity demand 5 minutes ahead to help grid operators make better decisions? This project explores that question using a comprehensive dataset of Delhi's electricity consumption patterns from 2021 to 2024.
+</p>
+            <img src="project6images/electricpoles.jpg"
+                class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
+                width="100%" alt="DelhiAnalysisImage">
+            <p><h3>Project Goals</h3>
+                <ol>
+                    <li>Develop an accurate short-term forecasting model for electricity demand.</li>
+                    <li>Engineer meaningful features from raw time series data.</li>
+                    <li>Analyze demand patterns across different time scales (hourly, daily, monthly, seasonal).</li>
+                    <li>Understand weather impacts on electricity consumption.</li>
+                    <li>Create a production-ready model with robust evaluation.</li>
+                </ol>
+                <strong>Data Preprocessing</strong>
+                <li>Converted datetime to index with proper formatting</li>
+                <li>Handled missing values (540 in wdir, 2 in moving_avg_3)</li>
+                <li>Removed irrelevant columns</li><br>
+                <strong>Project Walkthrough</strong><br>
+                <p>This project leverages a comprehensive 4-year dataset (2021-2024) of 5-minute interval electricity demand from Delhi, India, combined with key weather parameters (temperature, humidity, pressure, wind) to build an accurate short-term forecasting model. Through extensive feature engineering, I transformed raw time series data into predictive signals by creating temporal features (hour of day, day of week, month, quarter, weekend indicators), lag variables (24-hour and 168-hour demand lags), rolling statistics (24-period moving average and standard deviation), and integrating Indian holiday calendar data. The final XGBoost model, trained on 314,928 samples and tested on 78,326 out-of-time samples, achieves strong performance metrics (RMSE: 191.6 kW, MAE: 88.9 kW) and successfully captures daily demand cycles, weekly patterns, seasonal variations, holiday effects, and weather-driven fluctuations—demonstrating its potential to support grid stability through better load balancing and operational decision-making.</p>
+                <strong>Feature Engineering</strong><br>
+                <li>dayofweek (Monday=1, Sunday=7)</li>
+                <li>dayofyear (day number 1-366)</li>
+                <li>quarter (1-4)</li>
+                <li>weekofyear (intuitive Jan 1 = week 1)</li>
+                <li>is_weekend (binary indicator)</li>
+        
+
+            </p>
+            <img src="project6images/project6.png"
+                class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
+                width="90%" alt="DelhiAnalysisImage2">
+                <p>This project explores that question using a comprehensive dataset of Delhi's electricity consumption patterns from 2021 to 2024. Below is the Jupyter Notebook of the project.
+<br>
+<h3>Jupyter Notebook: Delhi Electricity Demand Forecasting</h3>
+<iframe 
+    src="tikhaladelhiproject.html" 
+    width="100%" 
+    height="800px" 
+    style="border:1px solid #ccc;;" 
+    title="Jupyter Notebook Delhi Project">
+</iframe><br>
+<br><strong>Technical Implementation & Results</strong>
+<p>The model development utilized Python's data science ecosystem 
+    (pandas, numpy, matplotlib, seaborn for EDA; scikit-learn for evaluation; 
+    XGBoost for prediction; joblib for model 
+    persistence) with key insights revealing that lag features dominate imp
+    ortance, time-of-day shows clear cyclical patterns, seasonality impact
+    demand, and temperature positively correlates with consumption.
+    Visual validation confirms the model captures both short-term
+    fluctuations and long-term trends, making it suitable for real-world grid
+    applications.</p>
+    <strong>Skills Demonstrated</strong>
+<p>This project showcases expertise in time series analysis and feature engineering, including creating lag variables, rolling statistics, and temporal indicators; building and optimizing XGBoost models with hyperparameter tuning; performing comprehensive exploratory data analysis and correlation studies; applying proper time-based train/test validation and model evaluation using RMSE and MAE metrics; leveraging the full Python data science stack (pandas, numpy, matplotlib, seaborn, scikit-learn, XGBoost); and translating technical findings into actionable insights for grid stability and energy infrastructure applications.</p>
+                    <strong>Future Improvements</strong>
+                    <li>Deploy as API for real-time predictions</li>
+                    <li>Incorporate weather forecasts (not just historical)</li>
+                    <li>Experiment with deep learning (LSTM, Transformers)</li>
+                    <li>Add economic factors (holiday spending, industrial activity)</li>
+                    <li>Ensemble methods combining multiple algorithms</li>
+                    
+                </p>
+            <ul class="actions">
+                <li><a href="index.html" class="button">Back to Projects</a></li>
+            </ul> <hr>
+            <h2>Let's Connect!</h2>
+						<p>Thank you for checking out my portfolio! I hope you enjoyed exploring my projects. You can also explore more of my data visualizations on Tableau Public. Feel free to view some of my brand identity development projects on Behance. <br><br><strong>Tikhala :-)</strong> </p>
+						<ul class="actions">
+							<li><a href="https://github.com/tikhala" class="button">My Github</a></li>
+							<li><a href="https://public.tableau.com/app/profile/tikhalakatemecha
+								" class="button">My Tableau Public</a></li>
+							<li><a href="https://www.behance.net/tikhala" class="button">My Behance</a></li>
+							<li><a href="www.linkedin.com/in/tikhalakatemecha" class="button">My LinkedIn</a></li>
+						
+						</ul>
+        </section>
+        <!-- Three -->
+        <section id="three">
+            <div class="row">
+                <div class="col-8 col-12-small">
+                    <form method="post" action="mailto:tikhalakatemecha@gmail.com" enctype="multipart/form-data">
+                        <div class="row gtr-uniform gtr-50">
+                            <div class="col-6 col-12-xsmall"><input type="text" name="name" id="name" placeholder="Name" /></div>
+                            <div class="col-6 col-12-xsmall"><input type="email" name="email" id="email" placeholder="Email" /></div>
+                            <div class="col-12"><textarea name="message" id="message" placeholder="Type Your Message Here" rows="4"></textarea></div>
+                        </div>
+                    </form>
+                    <ul class="actions">
+                        <li><input type="submit" value="Send Message" /></li>
+                    </ul>
+                </div>
+                <div class="col-4 col-12-small">
+                    <ul class="labeled-icons">
+                        <li>
+                            <h3 class="icon solid fa-home"><span class="label">Address</span></h3>
+                            Lilongwe, Malawi.
+                        </li>
+                        <li>
+                            <h3 class="icon solid fa-mobile-alt"><span class="label">Phone</span></h3>
+                            +265(0) 996-127-620
+                        </li>
+                        <li>
+                            <h3 class="icon solid fa-envelope"><span class="label">Email</span></h3>
+                            <a href="#">tikhalakatemecha@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+						
+                <li><a href="https://github.com/tikhala" class="icon brands fa-github"><span class="label">Github</span></a></li>
+                <li><a href="www.linkedin.com/in/tikhalakatemecha" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+                <li><a href="https://www.behance.net/tikhala" class="icon brands fa-behance"><span class="label"></span></a></li>
+                <li><a href="tikhalakatemecha@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Tikhala 2024</li>
+            </ul>
+        </div>
+    </footer>
+
+<!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.poptrox.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+</div>
+</body>
+</html>
